@@ -53,8 +53,30 @@ def test_magic_meta_defined_name(doc_registry):
     assert D._cls == 'Foo'
 
 
+def test_magic_doc_attrs(doc_registry):
+
+    class D(Doc):
+        meta = {
+            'magic': True,
+        }
+
+    d = D({'a': 123, 'b': 'foo'})
+    d['c'] = 456
+    d.d = 'bar'
+
+    assert d['a'] == 123
+    assert d['b'] == 'foo'
+    assert d['c'] == 456
+    assert d['d'] == 'bar'
+
+    assert d.a == 123
+    assert d.b == 'foo'
+    assert d.c == 456
+    assert d.f == 'bar'
+
+
 @pytest.mark.xfail
-def test_doc_inheritance(data, doc_registry):
+def test_magic_doc_inheritance(data, doc_registry):
 
     class D(Doc):
         meta = {
